@@ -42,6 +42,20 @@ func TestParseLine(t *testing.T) {
 			},
 			false,
 		},
+		{
+			"13  et-5-3-0.cr0-pao1.ip4.gtt.net (89.149.128.82)  162.026 ms  162.083 ms  162.025 ms",
+			&Route{
+				Hop:      13,
+				Hostname: "et-5-3-0.cr0-pao1.ip4.gtt.net",
+				IP:       netaddr.IPFrom4([4]byte{89, 149, 128, 82}),
+				RTT: []time.Duration{
+					162026 * time.Microsecond,
+					162083 * time.Microsecond,
+					162025 * time.Microsecond,
+				},
+			},
+			false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.line, func(t *testing.T) {
@@ -88,7 +102,8 @@ func Test_parseMS(t *testing.T) {
 
 var output1 = ` 1  gigabitethernet3-3.exi1.melbourne.telstra.net (203.50.77.49)  0.235 ms  0.285 ms  0.245 ms
  2  bundle-ether3-100.exi-core10.melbourne.telstra.net (203.50.80.1)  2.368 ms  1.800 ms  2.119 ms
- 3  bundle-ether12.chw-core10.sydney.telstra.net (203.50.11.124)  14.988 ms  14.169 ms  14.738 ms`
+ 3  bundle-ether12.chw-core10.sydney.telstra.net (203.50.11.124)  14.988 ms  14.169 ms  14.738 ms
+13  et-5-3-0.cr0-pao1.ip4.gtt.net (89.149.128.82)  162.026 ms  162.083 ms  162.025 ms`
 
 func TestParseOutput(t *testing.T) {
 	type args struct {
@@ -132,6 +147,16 @@ func TestParseOutput(t *testing.T) {
 						14988 * time.Microsecond,
 						14169 * time.Microsecond,
 						14738 * time.Microsecond,
+					},
+				},
+				{
+					Hop:      13,
+					Hostname: "et-5-3-0.cr0-pao1.ip4.gtt.net",
+					IP:       netaddr.IPFrom4([4]byte{89, 149, 128, 82}),
+					RTT: []time.Duration{
+						162026 * time.Microsecond,
+						162083 * time.Microsecond,
+						162025 * time.Microsecond,
 					},
 				},
 			},
