@@ -44,20 +44,20 @@ func ParseLine(line string) (*Route, error) {
 		return nil, fmt.Errorf("error parsing IP address `%s`: %w", matches[0][3], err)
 	}
 
-	ms1 := strings.Split(matches[0][4], " ")[0]
+	ms1 := strings.Split(matches[0][4], " ms")[0]
 	rtt1, err := parseMS(ms1)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing first RTT `%s`: %w", ms1, err)
 	}
 
-	ms2 := strings.Split(matches[0][5], " ")[0]
+	ms2 := strings.Split(matches[0][5], " ms")[0]
 	rtt2, err := parseMS(ms2)
 	if err != nil {
 		return nil, err
 	}
 
 	println(matches[0][6])
-	ms3 := strings.Split(matches[0][6], " ")[0]
+	ms3 := strings.Split(matches[0][6], " ms")[0]
 	rtt3, err := parseMS(ms3)
 	if err != nil {
 		return nil, err
